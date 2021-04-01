@@ -12,7 +12,7 @@ bot.on('message', (msg) => {
 	console.log(msg)
 	let text = msg.text;
 	if (text == 'Dollar') {
-		bot.sendMessage(msg.chat.id, curs) // Тут я хочу передать значение доллара из другого файла go.js
+		bot.sendMessage(msg.chat.id, курс тут) // Тут я хочу передать значение доллара из другого файла go.js
 	}
 	
 })
