@@ -1,23 +1,19 @@
-let fetch = require("fetch")
 const request = require('request');
 const cheerio = require('cheerio');
 
-
 const url = 'https://www.cbr.ru/currency_base/daily/';
 
-async function checkPS() {
-  const data = await request(url, function(err, res, body) {
-    if (err) throw err;
-    let $ = cheerio.load(body)
-    let data = $('#content > div > div > div > div.table-wrapper > div > table > tbody > tr:nth-child(12) > td:nth-child(5)').text();
-    return data
-  });
+function checkPS() {
+  return new Promise((resolve, reject) => {
+    request(url, (error, response, body) => {
+      if (error) reject(error); // Если ошибка останавливаем выполнение этого блока кода и возвращаем ошибку
 
-  return data;
+      const $    = cheerio.load(body);
+      const data = $('#content > div > div > div > div.table-wrapper > div > table > tbody > tr:nth-child(12) > td:nth-child(5)').text();
+
+      resolve(data); // Возвращаем данные из промиса
+    });
+  });
 }
 
-(async () => {
-  const data = await checkPS();
-  
-  console.log(data);
-})();
+module.exports = checkPS;
